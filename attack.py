@@ -4,7 +4,7 @@ import time, os, sys, re
 pid = os.getpid()
 
 
-#get params
+#get parameters
 #Assumning input is correct, we have the following variables
 addr1,port1 = sys.argv[2].split(":") #listening port
 addr2,port2 = sys.argv[4].split(":") #sending port
