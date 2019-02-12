@@ -10,7 +10,7 @@ lAddr = ("", 50000) # listening addr+port
 sAddr = ("", 50010) # sending addr+port
 
 def usage():
-    print ("usage: -l <addr:port> -s <addr:port>]")
+    print ("usage: -l <addr:port> -s <addr:port>")
 
 
 #get parameters
