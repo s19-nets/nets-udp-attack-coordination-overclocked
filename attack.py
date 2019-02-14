@@ -6,8 +6,8 @@ from socket import *
 pid = os.getpid()
 
 #defaults
-lAddr = ("", 50000) # listening addr+port
-sAddr = ("", 50010) # sending addr+port
+listenAddrFull = ("", 50000) # listening addr+port
+sendAddrFull = ("", 50010) # sending addr+port
 
 def usage():
     print ("usage: -l <addr:port> -s <addr:port>")
@@ -15,25 +15,38 @@ def usage():
 
 #get parameters
 #Assumning input is correct, we have the following variables
+
 try:
-    lAddr,port1 = sys.argv[2].split(":")
-    sAddr,port2 = sys.argv[4].split(":")
+    lAddr, lPort = sys.argv[2].split(":")
+    sAddr, sPort = sys.argv[4].split(":")
 except:
     usage()
 
-port1 = int(port1)
-port2 = int(port2)
+lPort = int(lPort)
+sPort = int(sPort)
 
-lSocket = socket(AF_INET, SOCK_DGRAM) # listening socket
-sSocket = socket(AF_INET, SOCK_DGRAM) # sending socket
+l = socket(AF_INET, SOCK_DGRAM) # listening socket
+s = socket(AF_INET, SOCK_DGRAM) # sending socket
+
+listenAddrFull = (lAddr, lPort)
+sendAddrFull = (sAddr, sPort)
 
 print("\n")
-print(pid, lAddr, ": listening on port",port1)
-print(pid, sAddr, ": sending on port", port2)
+print(pid, lAddr, ": listening on port", lPort)
+print(pid, "sending to", sAddr, "on", sPort)
 print("\n")
 
 print("dummy attack program with pid %d.  do not trust my results" % pid)
 
-time.sleep(1)                        # sleep for 1 second
+l.bind(listenAddrFull)
+#l.setblocking(False)
+
+s.bind(sendAddrFull)
+#s.setblocking(False)
+
+
+msg, addr = l.recvfrom(1024)
+
 
 print("%d: attacking at %s" % (pid, time.asctime(time.localtime()))) # print time
+
